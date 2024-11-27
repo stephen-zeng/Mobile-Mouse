@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>win_icon.ico</file>
+        <file>mac_icon.icns</file>
+    </qresource>
+</RCC>
