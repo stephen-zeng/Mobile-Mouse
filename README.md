@@ -27,6 +27,4 @@
 + Qt Sensors
 + Qt Connectivity
 
-Windows则需要安装MSVC_2022编译器，不能使用MinGW编译，因为这样蓝牙无法使用。
-安卓可能有些设备无法正常使用，原因不详。
-Xcode项目可以直接由Qt项目生成，就不单独放上去了
+Windows则需要安装MSVC_2022编译器，不能使用MinGW编译，因为这样蓝牙无法使用。安卓可能有些设备无法正常使用，原因不详。Xcode项目可以直接由Qt项目生成，就不单独放上去了。包名叫`homework-qmake`，是因为这其实是我们期末作业🤣
