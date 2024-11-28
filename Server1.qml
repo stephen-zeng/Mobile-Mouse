@@ -44,8 +44,8 @@ Rectangle {
         id: contentTextRec
 
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: header.top
-        anchors.topMargin: 100
+        anchors.top: header.bottom
+        anchors.topMargin: 50
         width: parent.width
         Text {
             id: contentText
@@ -54,6 +54,44 @@ Rectangle {
             visible: true
             font.pixelSize: 25
             anchors.centerIn: parent
+        }
+    }
+
+    Rectangle {
+        id: touchArea
+        color: "black"
+        border.color: "lightblue"
+        border.width: 5
+        width: parent.width
+
+        anchors.top: contentTextRec.bottom
+        anchors.bottom: footer.top
+        anchors.topMargin: 50
+        anchors.bottomMargin: 25
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        MouseArea {
+            anchors.fill: parent
+            property int yStart: 0
+            property bool tracing: false
+
+            onPressed: {
+                yStart = mouse.y
+                tracing = true
+            }
+            onPositionChanged: {
+                if (!tracing) return;
+            }
+            onReleased: {
+                if (!tracing) return;
+                if (mouse.y - yStart >= root.height * 0.2)
+                    beServer.motionData(0, 0, 3); // Swipe down
+                    // console.log("Swipe down");
+                if (yStart - mouse.y >= root.height * 0.2)
+                    beServer.motionData(0, 0, 4); //Swipe up
+                    // console.log("Swipe up");
+                tracing = false
+            }
         }
     }
 
@@ -69,7 +107,10 @@ Rectangle {
         }
 
         onButton1Clicked: {
-            beServer.changeSpeed();
+            beServer.upSpeed();
+        }
+        onButton1PressAndHold: {
+            beServer.downSpeed();
         }
     }
 
@@ -113,17 +154,7 @@ Rectangle {
         anchors.bottomMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
 
-        onClicked: {
-            beServer.sig = 1;
-            beServer.generateData();
-        }
-
         onPressed: {
-            beServer.sig = 1;
-            beServer.generateData();
-        }
-
-        onReleased: {
             beServer.sig = 1;
             beServer.generateData();
         }
@@ -144,17 +175,7 @@ Rectangle {
         anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
 
-        onClicked: {
-            beServer.sig = 2;
-            beServer.generateData();
-        }
-
         onPressed: {
-            beServer.sig = 2;
-            beServer.generateData();
-        }
-
-        onReleased: {
             beServer.sig = 2;
             beServer.generateData();
         }
@@ -175,17 +196,7 @@ Rectangle {
         anchors.right: clickBtn.left
         anchors.rightMargin: 10
 
-        onClicked: {
-            beServer.sig = 3;
-            beServer.generateData();
-        }
-
         onPressed: {
-            beServer.sig = 3;
-            beServer.generateData();
-        }
-
-        onReleased: {
             beServer.sig = 3;
             beServer.generateData();
         }
@@ -206,17 +217,7 @@ Rectangle {
         anchors.left: clickBtn.right
         anchors.leftMargin: 10
 
-        onClicked: {
-            beServer.sig = 4;
-            beServer.generateData();
-        }
-
         onPressed: {
-            beServer.sig = 4;
-            beServer.generateData();
-        }
-
-        onReleased: {
             beServer.sig = 4;
             beServer.generateData();
         }

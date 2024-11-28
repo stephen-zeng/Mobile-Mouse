@@ -44,8 +44,8 @@ Rectangle {
         color: "black"
 
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: header.top
-        anchors.topMargin: 100
+        anchors.top: header.bottom
+        anchors.topMargin: 50
         width: parent.width
         Text {
             id: contentText
@@ -60,7 +60,7 @@ Rectangle {
     Footer {
         id: footer
 
-        buttonText1: "点击"
+        buttonText1: "移动速度: " + beServer.speed;
         buttonText2: timerFromServer2Page.running ? "暂停" : "开始"
 
         onButton2Clicked: {
@@ -69,72 +69,66 @@ Rectangle {
         }
 
         onButton1Clicked: {
-            // if (timerFromServer2Page.running) beServer.motionData(getSensor.x, getSensor.y, 1);
-            // else
-                beServer.motionData(0, 0, 1);
+            beServer.upSpeed();
         }
         onButton1PressAndHold: {
-            // if (timerFromServer2Page.running) beServer.motionData(getSensor.x, getSensor.y, -1);
-            // else
-                beServer.motionData(0, 0, -1);
-        }
-        onButton1DoubleClick: {
-            beServer.motionData(0, 0, 2);
+            beServer.downSpeed();
         }
     }
 
     Rectangle {
-        id: xRec
+        id: touchArea
         color: "black"
-
-        // color: "blue"
+        border.color: "lightblue"
+        border.width: 5
         width: parent.width
-        height: parent.height * 0.1
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: yRec.top
+
+        anchors.top: contentTextRec.bottom
+        anchors.bottom: footer.top
+        anchors.topMargin: 50
         anchors.bottomMargin: 25
-
-        Text {
-            color: "white"
-            anchors.centerIn: parent
-            text: "X: " + getSensor.x;
-            font.pixelSize: 25
-        }
-    }
-
-    Rectangle {
-        id: yRec
-        color: "black"
-
-        // color: "blue"
-        width: parent.width
-        height: parent.height * 0.1
-        anchors.centerIn: parent
-
-        Text {
-            color: "white"
-            anchors.centerIn: parent
-            text: "Y: " + getSensor.y;
-            font.pixelSize: 25
-        }
-    }
-
-    Rectangle {
-        id: zRec
-        color: "black"
-
-        // color: "blue"
-        width: parent.width
-        height: parent.height * 0.1
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: yRec.bottom
-        anchors.topMargin: 25
+
 
         Text {
             color: "white"
+            text: "Click Area"
             anchors.centerIn: parent
-            text: "Z: " + getSensor.z;
             font.pixelSize: 25
+        }
+
+        MouseArea {
+            property int yStart: 0
+            property bool tracing: false
+
+            anchors.fill: parent
+            onClicked: {
+                beServer.motionData(0, 0, 1); // Left Click
+            }
+            onPressAndHold: {
+                beServer.motionData(0, 0, -1); // Right Click
+            }
+            onDoubleClicked: {
+                beServer.motionData(0, 0, 2); // Double Click
+            }
+
+            onPressed: {
+                yStart = mouse.y
+                tracing = true
+            }
+            onPositionChanged: {
+                if (!tracing) return;
+            }
+            onReleased: {
+                if (!tracing) return;
+                if (mouse.y - yStart >= root.height * 0.2)
+                    beServer.motionData(0, 0, 3); // Swipe down
+                    // console.log("Swipe down");
+                if (yStart - mouse.y >= root.height * 0.2)
+                    beServer.motionData(0, 0, 4); //Swipe up
+                    // console.log("Swipe up");
+                tracing = false
+            }
         }
     }
 }

@@ -1,6 +1,3 @@
-// Author: Stephen Zeng 曾浩正
-// Mail: stephenzeng@goforit.top
-
 import QtQuick
 
 Text {

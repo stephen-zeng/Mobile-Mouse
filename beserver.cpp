@@ -99,15 +99,16 @@ void BeServer::generateData() {
 }
 
 void BeServer::motionData(const double& x, const double& y, const int& click) {
-    int speed = 30;
+    int speed = m_speed * 10;
     int p_x = (int) (x * speed);
     int p_y = (int) (y * speed);
-    qDebug()<<p_x<<" "<<p_y;
     provideData(p_x, p_y, click);
 }
 
 void BeServer::provideData(const int& x, const int& y, const int& click) {
     if (!m_senddata) return;
+
+    qDebug()<<x<<" "<<y<<" "<<click;
     dataX = static_cast <qint8> (x);
     dataY = static_cast <qint8> (y);
     dataClick = static_cast <qint8> (click);
@@ -193,9 +194,14 @@ void BeServer::setSpeed(const int& newSpeed) {
         emit updateSpeed();
     }
 }
-void BeServer::changeSpeed() {
+void BeServer::upSpeed() {
     m_speed++;
     if (m_speed>5) m_speed = 1;
+    emit updateSpeed();
+}
+void BeServer::downSpeed() {
+    m_speed--;
+    if (m_speed<1) m_speed = 5;
     emit updateSpeed();
 }
 

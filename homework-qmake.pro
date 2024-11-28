@@ -52,10 +52,13 @@ android: {
 
 macos: {
     QMAKE_INFO_PLIST    = ./macInfo.plist
+
     SOURCES += \
     mousemove_mac.cpp
+
     HEADERS += \
     mousemove.h
+
 }
 ios {
     OBJECTIVE_SOURCES += \

@@ -1,8 +1,3 @@
-/*
-Author: Stephen Zeng 曾浩正
-Mail: stephenzeng@goforit.top
-*/
-
 #ifndef SERVERMODEL_H
 #define SERVERMODEL_H
 

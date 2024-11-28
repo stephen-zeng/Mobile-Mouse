@@ -38,7 +38,8 @@ public:
     Q_INVOKABLE void motionData(const double&, const double&, const int&);
     Q_INVOKABLE void disconnectClient();
     Q_INVOKABLE void connectClient();
-    Q_INVOKABLE void changeSpeed();
+    Q_INVOKABLE void upSpeed();
+    Q_INVOKABLE void downSpeed();
 
     explicit BeServer(QObject *parent = nullptr);
     ~BeServer();
