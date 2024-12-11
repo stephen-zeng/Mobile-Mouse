@@ -23,10 +23,8 @@
 + Windows客户端扫描设备时会出现一堆`Bluetooth **:**:**:**`，不用管，找到自己的设备连接就好。
 + 移动端的连接状态可能会更新不及时，以电脑端的连接状态显示为准
 
-# 运行逻辑 #
-见下面思维导图
-![](https://raw.githubusercontent.com/stephen-zeng/Mobile-Mouse/refs/heads/main/mindmap.drawio.png)
-
+# 开发报告 #
+https://www.学习.fun/ml-note/qt-hw-summary/
 # 二次开发 #
 项目使用的Qt版本为**6.8.0 LTS**，在安装Qt时，需要安装一下组件（Additional Libraries）：
 + Qt Sensors
