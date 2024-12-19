@@ -248,7 +248,7 @@ Rectangle {
             color: "white"
             anchors.top: text1.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "SZ Remote Device"
+            text: beServer.name
             font.pixelSize: 15
         }
 
@@ -258,7 +258,7 @@ Rectangle {
             anchors.top: text2.bottom
             anchors.topMargin: 15
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "如果你的设备是安卓设备，则名称为设备名称"
+            text: "安卓设备是上面的名称或设备名称"
             font.pixelSize: 15
         }
     }

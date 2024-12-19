@@ -32,6 +32,7 @@ public:
     Q_PROPERTY(bool senddata READ getSenddata WRITE setSenddata NOTIFY updateSenddata);
     Q_PROPERTY(int sig READ getSiga WRITE setSiga NOTIFY updateSiga);
     Q_PROPERTY(int speed READ getSpeed WRITE setSpeed NOTIFY updateSpeed);
+    Q_PROPERTY(QString name READ getName WRITE setName NOTIFY updateName);
 
     Q_INVOKABLE void startAdvertising();
     Q_INVOKABLE void generateData();
@@ -69,6 +70,10 @@ private:
     int getSpeed();
     void setSpeed(const int&);
 
+    QString m_name;
+    QString getName();
+    void setName(const QString&);
+
     QLowEnergyAdvertisingData advertisingData;
     QLowEnergyCharacteristicData characteristicData;
     QLowEnergyServiceData serviceData;
@@ -79,6 +84,7 @@ private:
     quint8 dataX = 0;
     quint8 dataY = 0;
     quint8 dataClick = 0;
+    QString file;
 
     void provideData(const int&, const int&, const int&);
 
@@ -94,6 +100,7 @@ signals:
     void updateSenddata();
     void updateSiga();
     void updateSpeed();
+    void updateName();
 };
 
 #endif // BESERVER_H

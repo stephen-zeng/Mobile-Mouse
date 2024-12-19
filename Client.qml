@@ -80,6 +80,31 @@ Rectangle {
     //     }
     // }
 
+    Rectangle {
+        id: lastConnect
+        anchors.top: header.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width * 0.9
+        height: 50
+        radius: 5
+        color: "lightblue"
+        border.width: 2
+        border.color: "blue"
+        Text {
+            text: "上一次连接的设备: " + getServer.last
+            anchors.centerIn: parent
+        }
+        MouseArea {
+            anchors.fill: parent
+            visible: getServer.haveLast
+            onClicked: {
+                getServer.stopGetServer();
+                getServer.connectLast();
+                root.goToConnect();
+            }
+        }
+    }
+
     ListModel {
         id: serverModel
     }
@@ -104,7 +129,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     getServer.stopGetServer();
-                    getServer.startGetService(addr);
+                    getServer.startGetService(addr, name);
                     root.goToConnect();
                 }
             }
@@ -115,8 +140,9 @@ Rectangle {
         id: serverList
         width: parent.width
         clip: true
-        anchors.top: header.bottom
+        anchors.top: lastConnect.bottom
         anchors.bottom: footer.top
+        anchors.topMargin: 5
         model: serverModel
         delegate: serverComponent
         spacing: 5

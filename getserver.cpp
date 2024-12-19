@@ -5,6 +5,10 @@ Mail: stephenzeng@goforit.top
 
 #include "getserver.h"
 #include <QDebug>
+#include <QFile>
+#include <QDir>
+#include <QStandardPaths>
+#include <QTextStream>
 
 using namespace std;
 
@@ -20,6 +24,25 @@ GetServer::GetServer(QObject *parent)
             this, &GetServer::scanServerFinished);
     connect(agent, &QBluetoothDeviceDiscoveryAgent::errorOccurred,
             this, &GetServer::scanError);
+
+    QString path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+#if defined(Q_OS_MACOS)
+    file = path + "/desktopConfig";
+#elif defined(Q_OS_WIN)
+    file = path + "\\desktopConfig";
+#endif
+    qDebug()<<file;
+    QDir().mkpath(path);
+    if (QFile::exists(file)) {
+        QFile desktopConfig(file);
+        desktopConfig.open(QIODevice::ReadOnly | QIODevice::Text);
+        QTextStream in(&desktopConfig);
+        m_last = in.readLine();
+        m_addr = in.readLine();
+        desktopConfig.close();
+        m_havelast = true;
+        emit updateLast();
+    }
 }
 
 GetServer::~GetServer() {
@@ -91,8 +114,22 @@ void GetServer::scanError(const QBluetoothDeviceDiscoveryAgent::Error& errorInfo
     emit updateAgentstart();
 }
 
-void GetServer::startGetService(const QString& address) {
+void GetServer::connectLast() {
+    startGetService(m_addr, "");
+}
 
+void GetServer::startGetService(const QString& address, const QString& name) {
+    if (!name.isEmpty()) {
+        QFile desktopConfig(file);
+        desktopConfig.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text);
+        QTextStream out(&desktopConfig);
+        out<<name+"\n";
+        out<<address+"\n";
+        desktopConfig.close();
+        m_havelast = true;
+        m_last = name;
+        emit updateLast();
+    }
     for (auto tmp: as_const(serverList))
         if (auto server = qobject_cast<ServerInfo*>(tmp))
             if (server->getAddress() == address) {
@@ -147,7 +184,7 @@ void GetServer::retry() {
     }
     m_serverconnect = 0;
     emit updateServerconnect();
-    startGetService(currentServer.getAddress());
+    startGetService(currentServer.getAddress(), "");
 }
 
 void GetServer::disconnectServer() {
@@ -342,4 +379,8 @@ int GetServer::getServerconnect() {
 
 int GetServer::getData() {
     return m_data;
+}
+
+QString GetServer::getLast() {
+    return m_last;
 }

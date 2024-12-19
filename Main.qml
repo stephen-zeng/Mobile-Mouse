@@ -7,7 +7,7 @@ import QtQuick.Window
 
 Window {
     id: basement
-    width: 400
+    width: 500
     height: 700
     visible: true
     // anchors.topMargin: Qt.platform.os === "ios" ? topMargin : 20

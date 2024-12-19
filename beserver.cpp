@@ -9,15 +9,48 @@ Mail: stephenzeng@goforit.top
 #include <QTimer>
 #include <QPermissions>
 #include <QDebug>
-
+#include <QFile>
+#include <QTextStream>
+#include <QStandardPaths>
 
 using namespace std;
 
 BeServer::BeServer(QObject *parent)
     : QObject(parent) {
+#if defined(Q_OS_IOS)
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#elif defined(Q_OS_ANDROID)
+    QString path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+#else
+    QString path = ".";
+#endif
+
+    file = path + "/mobileConfig";
+    // qDebug()<<file;
+    if (!QFile::exists(file)) {
+        qDebug()<<"New File";
+        QFile mobileConfig(file);
+        QString tmp = "SZ Remote Device";
+        mobileConfig.open(QIODevice::WriteOnly | QIODevice::Text);
+        QTextStream out(&mobileConfig);
+        // out.setEncoding(QStringConverter::Utf8);  // 设置编码为UTF-8，方便中文
+        out<<tmp;
+        mobileConfig.close();
+    }
+
+    // qDebug()<<QFile::exists(file);
+
+    QFile mobileConfig(file);
+    mobileConfig.open(QIODevice::ReadOnly | QIODevice::Text);
+    QTextStream in(&mobileConfig);
+    // in.setEncoding(QStringConverter::Utf8);
+    m_name = in.readAll();
+
+    mobileConfig.close();
+    // qDebug()<<"Start Advising"<<m_name;
+
     advertisingData.setDiscoverability(QLowEnergyAdvertisingData::DiscoverabilityGeneral);
     advertisingData.setIncludePowerLevel(true);
-    advertisingData.setLocalName("SZ Remote Device");
     advertisingData.setServices(
         QList <QBluetoothUuid>() <<
         QBluetoothUuid::ServiceClassUuid::HeartRate);
@@ -34,7 +67,6 @@ BeServer::BeServer(QObject *parent)
     serviceData.setUuid(QBluetoothUuid::ServiceClassUuid::HeartRate);
     serviceData.addCharacteristic(characteristicData);
 
-    qDebug()<<"Server Inititated";
 }
 
 BeServer::~BeServer() {
@@ -43,7 +75,16 @@ BeServer::~BeServer() {
 }
 
 void BeServer::startAdvertising() {
+    QFile mobileConfig(file);
+    mobileConfig.open(QIODevice::Truncate | QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&mobileConfig);
+    // out.setEncoding(QStringConverter::Utf8);
+    out<<m_name;
+    mobileConfig.close();
+    // qDebug()<<m_name;
+    advertisingData.setLocalName(m_name);
 
+    delete controller;
     controller = QLowEnergyController::createPeripheral();
     connect(controller, &QLowEnergyController::errorOccurred,
             this, &BeServer::errorOccurred);
@@ -57,7 +98,7 @@ void BeServer::startAdvertising() {
                                  advertisingData,
                                  advertisingData);
 
-    qDebug()<<"Start advertising";
+    qDebug()<<"Start Advertising "<<m_name;
 }
 
 void BeServer::errorOccurred(const QLowEnergyController::Error& errorInfo) {
@@ -205,5 +246,15 @@ void BeServer::downSpeed() {
     emit updateSpeed();
 }
 
+QString BeServer::getName() {
+    return m_name;
+}
+void BeServer::setName(const QString& newName) {
+    qDebug()<<"Changing name";
+    if (newName != m_name) {
+        m_name = newName;
+        emit updateName();
+    }
+}
 
 

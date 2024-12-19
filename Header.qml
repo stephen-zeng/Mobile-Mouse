@@ -8,7 +8,7 @@ Rectangle {
     id: root
     color: "black"
     width: parent.width
-    height: root.width * 0.1
+    height: 50
     anchors.top: parent.top
 
     property bool backIsShown: true

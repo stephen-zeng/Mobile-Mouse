@@ -28,14 +28,17 @@ public:
     Q_PROPERTY(QVariant serverlist READ getServerlist WRITE setServerlist NOTIFY updateServerlist);
     Q_PROPERTY(int serverconnect READ getServerconnect WRITE setServerconnect NOTIFY updateServerconnect);
     Q_PROPERTY(int data READ getData WRITE setData NOTIFY updateData);
+    Q_PROPERTY(QString last READ getLast NOTIFY updateLast);
+    Q_PROPERTY(bool haveLast READ getHavelast NOTIFY updateLast);
 
     Q_INVOKABLE void startGetServer();
     Q_INVOKABLE void stopGetServer();
     Q_INVOKABLE void refresh();
-    Q_INVOKABLE void startGetService(const QString&);
+    Q_INVOKABLE void startGetService(const QString&, const QString&);
     Q_INVOKABLE void retry();
     Q_INVOKABLE void disconnectServer();
     Q_INVOKABLE void checkController();
+    Q_INVOKABLE void connectLast();
 
     explicit GetServer(QObject *parent = nullptr);
     ~GetServer();
@@ -66,12 +69,21 @@ private:
     int getData();
     void setData(const int&){};
 
+    QString m_last = "无";
+    QString m_addr;
+    QString getLast();
+
+    bool m_havelast = false;
+    bool getHavelast(){return m_havelast;};
+
     QBluetoothDeviceDiscoveryAgent *agent;
     QLowEnergyController *controller = nullptr;
     QLowEnergyService *service = nullptr;
     QLowEnergyDescriptor notistatus;
     ServerInfo currentServer;
     ServerInfo lastServer;
+    QString file;
+
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
     MouseMove mouseMove;
 #endif
@@ -97,6 +109,7 @@ signals:
     void updateServerlist();
     void updateServerconnect();
     void updateData();
+    void updateLast();
 };
 
 #endif // GETSERVER_H

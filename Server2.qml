@@ -111,6 +111,24 @@ Rectangle {
             onDoubleClicked: {
                 beServer.motionData(0, 0, 2); // Double Click
             }
+
+            onPressed: {
+                yStart = mouse.y
+                tracing = true
+            }
+            onPositionChanged: {
+                if (!tracing) return;
+            }
+            onReleased: {
+                if (!tracing) return;
+                if (mouse.y - yStart >= root.height * 0.2)
+                    beServer.motionData(0, 0, 3); // Swipe down
+                    // console.log("Swipe down");
+                if (yStart - mouse.y >= root.height * 0.2)
+                    beServer.motionData(0, 0, 4); //Swipe up
+                    // console.log("Swipe up");
+                tracing = false
+            }
         }
     }
 }

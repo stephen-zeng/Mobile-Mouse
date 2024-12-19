@@ -7,7 +7,7 @@ import QtQuick.Controls
 Rectangle {
     id: root
     width: parent.width
-    height: root.width * 0.25
+    height: 80
     anchors.bottom: parent.bottom
     anchors.margins: 10
     color: "black"

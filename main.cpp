@@ -57,9 +57,8 @@ int main(int argc, char *argv[])
     GetSensor getSensorInstance(&app);
     engine.rootContext()->setContextProperty("getSensor", &getSensorInstance);
 #endif
-    BeServer beServerInstance(&app);
     GetServer getServerInstance(&app);
-
+    BeServer beServerInstance(&app);
     engine.rootContext()->setContextProperty("getServer", &getServerInstance);
     engine.rootContext()->setContextProperty("beServer", &beServerInstance);
 
