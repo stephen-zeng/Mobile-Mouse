@@ -15,7 +15,14 @@
 + 多架构支持，支持arm64和x64双架构
 
 # 效果 #
-![](https://raw.githubusercontent.com/stephen-zeng/Mobile-Mouse/master/demo.gif)
+## 按钮控制 ##
+![](https://raw.githubusercontent.com/stephen-zeng/Mobile-Mouse/master/demo_button.gif)
+
+## 陀螺仪控制 ##
+![](https://raw.githubusercontent.com/stephen-zeng/Mobile-Mouse/master/demo_sensor.gif)
+
+## 模拟滚轮 ##
+![](https://raw.githubusercontent.com/stephen-zeng/Mobile-Mouse/master/demo_scroll.gif)
 
 # 使用 #
 直接从[release页面](https://github.com/stephen-zeng/Mobile-Mouse/releases)下载对应版本，iOS版本需要自己签名（OACD）。使用方法在APP中均有体现。
