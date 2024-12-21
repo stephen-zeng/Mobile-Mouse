@@ -59,6 +59,7 @@ macos: {
     HEADERS += \
     mousemove.h
 
+    LIBS += -framework Quartz
 }
 ios {
     OBJECTIVE_SOURCES += \

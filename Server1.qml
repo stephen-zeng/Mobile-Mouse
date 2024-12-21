@@ -40,6 +40,25 @@ Rectangle {
         }
     }
 
+    Footer {
+        id: footer
+
+        buttonText1: "移动速度: " + beServer.speed
+        buttonText2: "暂停"
+
+        onButton2Clicked: {
+            if (beServer.senddata) beServer.senddata = false;
+            else beServer.senddata = true;
+        }
+
+        onButton1Clicked: {
+            beServer.upSpeed();
+        }
+        onButton1PressAndHold: {
+            beServer.downSpeed();
+        }
+    }
+
     Rectangle {
         id: contentTextRec
 
@@ -71,7 +90,10 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
 
         MouseArea {
-            anchors.fill: parent
+            height: parent.height
+            width: 30
+            anchors.right: parent.right
+            // anchors.fill: parent
             property int yStart: 0
             property bool tracing: false
 
@@ -84,33 +106,41 @@ Rectangle {
             }
             onReleased: {
                 if (!tracing) return;
-                if (mouse.y - yStart >= root.height * 0.2)
+                if (mouse.y - yStart >= 30)
                     beServer.motionData(0, 0, 3); // Swipe down
                     // console.log("Swipe down");
-                if (yStart - mouse.y >= root.height * 0.2)
+                if (yStart - mouse.y >= 30)
                     beServer.motionData(0, 0, 4); //Swipe up
                     // console.log("Swipe up");
                 tracing = false
             }
         }
-    }
 
-    Footer {
-        id: footer
+        MouseArea {
+            height: parent.height
+            width: 30
+            anchors.left: parent.left
+            // anchors.fill: parent
+            property int yStart: 0
+            property bool tracing: false
 
-        buttonText1: "移动速度: " + beServer.speed
-        buttonText2: "暂停"
-
-        onButton2Clicked: {
-            if (beServer.senddata) beServer.senddata = false;
-            else beServer.senddata = true;
-        }
-
-        onButton1Clicked: {
-            beServer.upSpeed();
-        }
-        onButton1PressAndHold: {
-            beServer.downSpeed();
+            onPressed: {
+                yStart = mouse.y
+                tracing = true
+            }
+            onPositionChanged: {
+                if (!tracing) return;
+            }
+            onReleased: {
+                if (!tracing) return;
+                if (mouse.y - yStart >= 30)
+                    beServer.motionData(0, 0, 3); // Swipe down
+                    // console.log("Swipe down");
+                if (yStart - mouse.y >= 30)
+                    beServer.motionData(0, 0, 4); //Swipe up
+                    // console.log("Swipe up");
+                tracing = false
+            }
         }
     }
 
@@ -238,6 +268,7 @@ Rectangle {
         Text {
             id: text1
             color: "white"
+            visible: (Qt.platform.os == "ios") ? true: false
             anchors.horizontalCenter: parent.horizontalCenter
             text: "如果你的设备是iOS设备，则名称为"
             font.pixelSize: 15
@@ -247,6 +278,7 @@ Rectangle {
             id: text2
             color: "white"
             anchors.top: text1.bottom
+            visible: (Qt.platform.os == "ios") ? true: false
             anchors.horizontalCenter: parent.horizontalCenter
             text: beServer.name
             font.pixelSize: 15
@@ -255,10 +287,9 @@ Rectangle {
         Text {
             id: text3
             color: "white"
-            anchors.top: text2.bottom
-            anchors.topMargin: 15
+            visible: (Qt.platform.os == "android") ? true: false
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "安卓设备是上面的名称或设备名称"
+            text: "安卓设备的名称为本身名称"
             font.pixelSize: 15
         }
     }

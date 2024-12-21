@@ -36,6 +36,8 @@ Rectangle {
         headerText: "陀螺仪"
         onBackButtonClicked: {
             root.backToServer1();
+            timerFromServer2Page.running = false;
+            beServer.senddata = false;
         }
     }
 
@@ -101,7 +103,9 @@ Rectangle {
             property int yStart: 0
             property bool tracing: false
 
-            anchors.fill: parent
+            height: parent.height
+            width: parent.width - 60
+            anchors.centerIn: parent
             onClicked: {
                 beServer.motionData(0, 0, 1); // Left Click
             }
@@ -111,6 +115,15 @@ Rectangle {
             onDoubleClicked: {
                 beServer.motionData(0, 0, 2); // Double Click
             }
+        }
+
+        MouseArea {
+            height: parent.height
+            width: 30
+            anchors.right: parent.right
+            // anchors.fill: parent
+            property int yStart: 0
+            property bool tracing: false
 
             onPressed: {
                 yStart = mouse.y
@@ -121,14 +134,42 @@ Rectangle {
             }
             onReleased: {
                 if (!tracing) return;
-                if (mouse.y - yStart >= root.height * 0.2)
+                if (mouse.y - yStart >= 30)
                     beServer.motionData(0, 0, 3); // Swipe down
                     // console.log("Swipe down");
-                if (yStart - mouse.y >= root.height * 0.2)
+                if (yStart - mouse.y >= 30)
                     beServer.motionData(0, 0, 4); //Swipe up
                     // console.log("Swipe up");
                 tracing = false
             }
         }
+
+        MouseArea {
+            height: parent.height
+            width: 30
+            anchors.left: parent.left
+            // anchors.fill: parent
+            property int yStart: 0
+            property bool tracing: false
+
+            onPressed: {
+                yStart = mouse.y
+                tracing = true
+            }
+            onPositionChanged: {
+                if (!tracing) return;
+            }
+            onReleased: {
+                if (!tracing) return;
+                if (mouse.y - yStart >= 30)
+                    beServer.motionData(0, 0, 3); // Swipe down
+                    // console.log("Swipe down");
+                if (yStart - mouse.y >= 30)
+                    beServer.motionData(0, 0, 4); //Swipe up
+                    // console.log("Swipe up");
+                tracing = false
+            }
+        }
+
     }
 }

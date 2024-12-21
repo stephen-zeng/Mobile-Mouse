@@ -12,6 +12,14 @@ MouseMove::MouseMove() {
     qDebug()<<"MouseMove on Windows start";
 }
 
+void simScroll(const int& y) {
+    INPUT input = {0};
+    input.type = INPUT_MOUSE;
+    input.mi.dwFlags = MOUSEEVENTF_WHEEL;
+    input.mi.mouseData = y;
+    SendInput(1, &input, sizeof(INPUT));
+}
+
 void MouseMove::moveMouse(const int& x, const int& y, const int& click) {
     POINT p;
     GetCursorPos(&p);
@@ -51,7 +59,7 @@ void MouseMove::moveMouse(const int& x, const int& y, const int& click) {
         click[1].type = INPUT_MOUSE;
         click[1].mi.dwFlags = MOUSEEVENTF_RIGHTUP;
         SendInput(2, click, sizeof(INPUT));
-    } else if (click ==2) {
+    } else if (click == 2) {
         INPUT click[2] = {};
         click[0].type = INPUT_MOUSE;
         click[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
@@ -59,5 +67,6 @@ void MouseMove::moveMouse(const int& x, const int& y, const int& click) {
         click[1].mi.dwFlags = MOUSEEVENTF_LEFTUP;
         SendInput(2, click, sizeof(INPUT));
         SendInput(2, click, sizeof(INPUT));
-    }
+    } else if (click == 3) simScroll(200);
+    else if (click == 4) simScroll(-200);
 }

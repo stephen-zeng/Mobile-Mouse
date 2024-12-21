@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 15.0.0, 2024-12-19T23:37:47. -->
+<!-- Written by QtCreator 15.0.0, 2024-12-21T22:08:24. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -439,7 +439,7 @@
      <value type="int" key="type">0</value>
     </valuemap>
     <value type="QString" key="PerfRecordArgsId">-e cpu-cycles --call-graph dwarf,4096 -F 250</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Run  on SZ’s iPhone</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Run homework-qmake on SZ’s iPhone</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.IosRunConfiguration:</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/Users/stephenzeng/WHU/Qt-Project/homework-qmake/homework-qmake.pro</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
@@ -659,7 +659,7 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="bool" key="PE.EnvironmentAspect.PrintOnRun">false</value>
     <value type="QString" key="PerfRecordArgsId">-e cpu-cycles --call-graph dwarf,4096 -F 250</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">homework-qmake</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.AndroidRunConfiguration:</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/Users/stephenzeng/WHU/Qt-Project/homework-qmake/homework-qmake.pro</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>
@@ -996,7 +996,7 @@
      <value type="int" key="type">1</value>
     </valuemap>
     <value type="QString" key="PerfRecordArgsId">-e cpu-cycles --call-graph dwarf,4096 -F 250</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Run  on iOS Simulator</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Run homework-qmake on iOS Simulator</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.IosRunConfiguration:</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/Users/stephenzeng/WHU/Qt-Project/homework-qmake/homework-qmake.pro</value>
     <value type="bool" key="ProjectExplorer.RunConfiguration.Customized">true</value>

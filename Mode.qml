@@ -28,7 +28,7 @@ Rectangle {
 
         Rectangle {
             width: parent.width
-            y: parent.height * 0.2
+            y: (Qt.platform.os == "ios") ? parent.height * 0.2 : parent.height * 0.3
 
             Text {
                 id: infoTitle
@@ -103,25 +103,15 @@ Rectangle {
                 anchors.top: text4.bottom
                 anchors.topMargin: 15
                 anchors.horizontalCenter: parent.horizontalCenter
-                text: "注意，为了适配多显示器，"
+                text: "左右边缘滑动以滚动页面"
                 font.pixelSize: 15
             }
-
-            Text {
-                id: text6
-                color: "white"
-                anchors.top: text5.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "右和下边缘没有做光标限制。"
-                font.pixelSize: 15
-            }
-
 
             Rectangle {
                 id: deviceName
-                anchors.top: text6.bottom
+                anchors.top: text5.bottom
                 anchors.topMargin: 15
-                visible: (Qt.platform.os == "android" || Qt.platform.os == "ios") ? true: false
+                visible: (Qt.platform.os == "ios") ? true: false
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Text {
@@ -129,7 +119,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     color: "white"
                     font.pixelSize: 15
-                    text: "移动设备可以在下面自定义设备名"
+                    text: "iOS设备可以在下面自定义设备名"
                 }
 
                 TextField {
@@ -140,10 +130,6 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pixelSize: 15
                     text: beServer.name
-                    background: Rectangle {
-                        color: "lightgray"
-                        radius: 5
-                    }
                     onTextChanged: beServer.name = nameField.text
                     horizontalAlignment: Text.AlignHCenter
                 }

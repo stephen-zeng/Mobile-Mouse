@@ -39,6 +39,7 @@ GetServer::GetServer(QObject *parent)
         QTextStream in(&desktopConfig);
         m_last = in.readLine();
         m_addr = in.readLine();
+        qDebug()<<m_addr;
         desktopConfig.close();
         m_havelast = true;
         emit updateLast();
@@ -119,6 +120,7 @@ void GetServer::connectLast() {
 }
 
 void GetServer::startGetService(const QString& address, const QString& name) {
+    qDebug()<<address;
     if (!name.isEmpty()) {
         QFile desktopConfig(file);
         desktopConfig.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text);
