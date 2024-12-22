@@ -135,10 +135,10 @@ Rectangle {
             onReleased: {
                 if (!tracing) return;
                 if (mouse.y - yStart >= 30)
-                    beServer.motionData(0, 0, 3); // Swipe down
+                    beServer.motionData(0, 0, 4); // Swipe up
                     // console.log("Swipe down");
                 if (yStart - mouse.y >= 30)
-                    beServer.motionData(0, 0, 4); //Swipe up
+                    beServer.motionData(0, 0, 3); //Swipe down
                     // console.log("Swipe up");
                 tracing = false
             }
@@ -162,14 +162,13 @@ Rectangle {
             onReleased: {
                 if (!tracing) return;
                 if (mouse.y - yStart >= 30)
-                    beServer.motionData(0, 0, 3); // Swipe down
+                    beServer.motionData(0, 0, 4); // Swipe up
                     // console.log("Swipe down");
                 if (yStart - mouse.y >= 30)
-                    beServer.motionData(0, 0, 4); //Swipe up
+                    beServer.motionData(0, 0, 3); //Swipe down
                     // console.log("Swipe up");
                 tracing = false
             }
         }
-
     }
 }
