@@ -26,7 +26,7 @@
 ![](https://raw.githubusercontent.com/stephen-zeng/Mobile-Mouse/master/demo_scroll.gif)
 
 # 使用 #
-直接从[release页面](https://github.com/stephen-zeng/Mobile-Mouse/releases)下载对应版本，iOS版本需要自己签名（OACD）。使用方法在APP中均有体现。
+直接从[release页面](https://github.com/stephen-zeng/Mobile-Mouse/releases)下载对应版本，iOS版本需要自己签名。使用方法在APP中均有体现。
 + 对于安卓设备，本机设备的名称在各系统的**关于本机**处查看。
 + Windows客户端扫描设备时会出现一堆`Bluetooth **:**:**:**`，不用管，找到自己的设备连接就好。
 + 移动端的连接状态可能会更新不及时，以电脑端的连接状态显示为准
