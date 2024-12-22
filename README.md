@@ -22,6 +22,7 @@
 ![](https://raw.githubusercontent.com/stephen-zeng/Mobile-Mouse/master/demo_sensor.gif)
 
 ## 模拟滚轮 ##
+注意，为了适应触屏的操作逻辑，实际的滚动方向和演示的方向相反
 ![](https://raw.githubusercontent.com/stephen-zeng/Mobile-Mouse/master/demo_scroll.gif)
 
 # 使用 #
