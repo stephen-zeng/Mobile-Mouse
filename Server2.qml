@@ -106,6 +106,13 @@ Rectangle {
             height: parent.height
             width: parent.width - 60
             anchors.centerIn: parent
+            onPressed: {
+                timerFromServer2Page.running = false;
+            }
+            onReleased: {
+                timerFromServer2Page.running = true;
+            }
+
             onClicked: {
                 beServer.motionData(0, 0, 1); // Left Click
             }
